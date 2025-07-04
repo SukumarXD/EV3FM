@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gabriel jeannette - Blog Político</title>
+   <link rel="stylesheet" href="styles.css" />
+  
+</head>
+<body>
+  <header>
+    <h1>Franco Aldo Parisi Fernandez</h1>
+  </header>
+
+  <main>
+    <a href="index.html">← Volver al inicio</a><!--- recuerda mover las cosas aqui!! --->
+    <img class="img-politico" src="img/Franco_Parisi.png" alt="franco parisi" />
+    
+    <h2>Resumen Biográfico</h2>
+    <p>Hijo menor de tres hermanos, sus padres son Antonino Parisi Sepúlveda y su madre Zandra Fernandez.
+       Se casó con Lee Campbell en EEUU el año 1996 y posteriormente se divorció en 2009. 
+    </p>
+    
+    <h2>Estudios y datos académicos</h2>
+    <p>Durante su vida escolar estudió en el instituto nacional General José Miguel Carrera,
+      pasaría por la escuela militar Libertador Bernardo O'Higgins.
+    </p>
+    <p>Ingeniería Comercial (Universidad de Chile).</p>
+    <p>Doctorado en Administración (University of Georgia, EEUU).</p>
+
+    <h2>Inicios de su vida politica</h2>
+    <p>En los años 90, iniciaría su incursion por la politica siendo un asesor economico informal del gobierno, 
+      sin ningún tipo de afiliación por algún partido especifico.
+    </p>
+    <p>En 2010, fue designado por el entonces presidente Sebastián Piñera como consejero de COCHILCO,
+      siendo esta su prueba de fuego en la administracion pública.
+    </p>
+    <p>En los años posteriores al 2011, comenzaría su aparición en televisión, en calidad de economista
+      explicaba de forma directa y accesible situaciones como el escándalo de "La Polar".
+    </p>
+    <p>Fue candidato presidencial en 2013 obteniendo el cuarto lugar, intentó postularse como candidato presidencial en 2017
+      y postular al senado, ambas sin éxito.
+    </p>
+    <p>Es co-fundador del partido de la gente (PDG) en el año 2019. durante 2021, también fue candidato presidencial
+      y se espera que este año vuelva a competir en la carrera por la presidencia.
+    </p>
+
+    <h2>Experiencia en cargos publicos</h2>
+    <p>Profesor visitante en universidades de EEUU: Georgia (1999), Alabama (2000), Rice (2002-2003)</p>
+    <p>Académico en la Universidad de Chile vicedecano y decano interino (2010),</p>
+    <p>Consultor para organismos como el banco central de ecuador, banco de Chile, fallabela y COCHILCO.</p>
+    <p>Presentador de programa de TV "El poder de la gente" (2011).</p>
+
+    <h2>Perfil de liderazgo</h2>
+    <p>Se define a si mismo como un "outsider populista", rechaza la casta politica de ambos lados.</p>
+
+    <h2>Controversias</h2>
+    <p>Acusacion de acoso sexual (2016): denunciada en EEUU por una estudiante, que finalmente le costaría la destitución.</p>
+    <p>Deuda de pensiones alimenticias (2021): se revela deuda de alrededor de 207 millones de CLP</p>
+    
+    <h2>Fuentes</h2>
+    <ul>
+      <li><a href="https://www.bbc.com/mundo/noticias-america-latina-59378455"> https://www.bbc.com/mundo/noticias-america-latina-59378455</a></li>
+      <li><a href="https://www.theclinic.cl/2024/12/15/franco-parisi-claro-que-quiero-volver-a-ser-candidato-presidencial-a-quien-no-le-gustaria-ser-corredor-de-formula-1"> https://www.theclinic.cl/2024/12/15/franco-parisi-claro-que-quiero-volver-a-ser-candidato-presidencial-a-quien-no-le-gustaria-ser-corredor-de-formula-1</a></li>
+      <li><a href="https://www.emol.com/noticias/Nacional/2025/03/30/1162044/franco-parisi-candidato-presidencial-campana.html">https://www.emol.com/noticias/Nacional/2025/03/30/1162044/franco-parisi-candidato-presidencial-campana.html</li>
+    </ul>
+
+    
+
+    <section class="comentarios">
+        <h2>Comentarios</h2>
+        <form id="comentario-form">
+            <input type="text" id="nombre" placeholder="Tu nombre" required />
+            <textarea id="mensaje" placeholder="Escribe tu comentario" required></textarea>
+            <button type="submit">Publicar</button>
+        </form>
+        <div id="lista-comentarios"></div>
+    </section>
+
+  </main>
+
+  <script>
+  const form = document.getElementById("comentario-form");
+  const lista = document.getElementById("lista-comentarios");
+
+  // Función para renderizar comentarios guardados
+  function cargarComentarios() {
+    const comentarios = JSON.parse(localStorage.getItem("comentarios_jeannette")) || [];
+    comentarios.forEach(c => {
+      const div = document.createElement("div");
+      div.className = "comentario";
+      div.innerHTML = `<strong>${c.nombre}</strong><p>${c.mensaje}</p>`;
+      lista.appendChild(div);
+    });
+  }
+
+  // Guardar nuevo comentario
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const nombre = document.getElementById("nombre").value.trim();
+    const mensaje = document.getElementById("mensaje").value.trim();
+
+    if (nombre && mensaje) {
+      const nuevo = { nombre, mensaje };
+
+      // Mostrar comentario
+      const div = document.createElement("div");
+      div.className = "comentario";
+      div.innerHTML = `<strong>${nombre}</strong><p>${mensaje}</p>`;
+      lista.prepend(div);
+
+      // Guardar en LocalStorage
+      const comentarios = JSON.parse(localStorage.getItem("comentarios_jeannette")) || [];
+      comentarios.unshift(nuevo);
+      localStorage.setItem("comentarios_jeannette", JSON.stringify(comentarios));
+
+      form.reset();
+    }
+    });
+
+    // Cargar al iniciar
+    cargarComentarios();
+</script>
+
+</body>
+</html>
